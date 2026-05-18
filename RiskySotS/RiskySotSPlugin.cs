@@ -28,7 +28,7 @@ namespace RiskySotS
         {
             ReadConfig();
             ModCompat();
-            new Language();
+            new LanguageTokens();
 
             //Enemies
             new EarlygameSpawnPools();

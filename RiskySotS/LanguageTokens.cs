@@ -2,14 +2,16 @@
 
 namespace RiskySotS
 {
-    internal class Language
+    internal class LanguageTokens
     {
-        public Language()
+        public LanguageTokens()
         {
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_NAME", "Shrine of the Colossus");
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_CONTEXT", "Pray to Shrine of the Colossus");
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_DESCRIPTION", "A Shrine that marks the path towards the Meridian.\n\nActivate the Shrine on 2 consecutive stages to guarantee a Halcyon Shrine on the 3rd stage.");
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_LORE", "LORE HERE");
+
+            LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_ACTIVATION_1", "Lightning flashes in the distance.");
 
             //Your language here
             //LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_NAME", "", "ru");

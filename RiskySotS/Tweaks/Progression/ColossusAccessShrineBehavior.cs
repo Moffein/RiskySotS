@@ -56,7 +56,7 @@ namespace RiskySotS.Tweaks.Progression
 
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage
             {
-                baseToken = "PORTAL_STORM_WILL_OPEN"
+                baseToken = ProgressionRework.RunVariables.hitShrineStage2 ? "PORTAL_STORM_WILL_OPEN" : "SHRINE_COLOSSUS_RISKYSOTS_ACTIVATION_1"
             });
         }
     }

@@ -297,6 +297,22 @@ namespace RiskySotS.Tweaks.Progression
 
             //Force Haclyonite Shrine to only spawn Green Orbs
             ReworkHalcyoniteShrinePortals(colossusPortal);
+
+            On.RoR2.PortalSpawner.AttemptSpawnPortalServer += PortalSpawner_AttemptSpawnPortalServer;
+        }
+
+        private bool PortalSpawner_AttemptSpawnPortalServer(On.RoR2.PortalSpawner.orig_AttemptSpawnPortalServer orig, PortalSpawner self)
+        {
+            if (self.portalSpawnCard == null && self.spawnMessageToken == "SHRINE_COLOSSUS_RISKYSOTS_TP_FINISH")
+            {
+
+                Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                {
+                    baseToken = self.spawnMessageToken
+                });
+                return false;
+            }
+            return orig(self);
         }
 
         private void ReworkHalcyoniteShrinePortals(InteractableSpawnCard colossusPortal)

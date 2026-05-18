@@ -12,7 +12,7 @@ namespace RiskySotS
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_LORE", "LORE HERE");
 
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_ACTIVATION_1", "<style=cWorldEvent>Lightning flashes in the distance.</style>");
-            LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_TP_FINISH", "<style=cWorldEvent>The Meridian draws nearer.</style>");
+            LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_TP_FINISH", "<style=cWorldEvent>The storm draws closer.</style>");
 
             //Your language here
             //LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_NAME", "", "ru");

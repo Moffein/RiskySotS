@@ -11,7 +11,8 @@ namespace RiskySotS
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_DESCRIPTION", "A Shrine that marks the path towards the Meridian.\n\nActivate the Shrine on 2 consecutive stages to guarantee a Halcyon Shrine on the 3rd stage.");
             LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_LORE", "LORE HERE");
 
-            LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_ACTIVATION_1", "Lightning flashes in the distance.");
+            LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_ACTIVATION_1", "<style=cWorldEvent>Lightning flashes in the distance.</style>");
+            LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_TP_FINISH", "<style=cWorldEvent>The Meridian draws nearer.</style>");
 
             //Your language here
             //LanguageAPI.Add("SHRINE_COLOSSUS_RISKYSOTS_NAME", "", "ru");

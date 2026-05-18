@@ -291,6 +291,7 @@ namespace RiskySotS.Tweaks.Progression
             On.RoR2.Networking.GenericSceneSpawnPoint.Start += GenericSceneSpawnPoint_Start;
 
             InteractableSpawnCard colossusPortal = Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/DLC2/iscColossusPortal.asset").WaitForCompletion();
+
             //Rework Green Orbs on TP
             ReworkGreenOrbs(colossusPortal);
 
@@ -322,9 +323,17 @@ namespace RiskySotS.Tweaks.Progression
             PortalSpawner[] portals = teleporter.GetComponents<PortalSpawner>();
             foreach (var portal in portals)
             {
+                //Remove Portal functionality, but the green orb will show when ColossusAccess calls it.
                 if (portal.portalSpawnCard == colossusPortal)
                 {
                     portal.enabled = false;
+
+                    portal.spawnPreviewMessageToken = "";
+                    portal.spawnMessageToken = "SHRINE_COLOSSUS_RISKYSOTS_TP_FINISH";
+
+                    portal.validStages = new string[0];
+
+                    portal.portalSpawnCard = null;
                     break;
                 }
             }

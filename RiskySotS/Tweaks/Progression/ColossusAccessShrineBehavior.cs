@@ -58,6 +58,22 @@ namespace RiskySotS.Tweaks.Progression
             {
                 baseToken = ProgressionRework.RunVariables.hitShrineStage2 ? "PORTAL_STORM_WILL_OPEN" : "SHRINE_COLOSSUS_RISKYSOTS_ACTIVATION_1"
             });
+
+            if (TeleporterInteraction.instance)
+            {
+                PortalSpawner[] portals = TeleporterInteraction.instance.gameObject.GetComponents<PortalSpawner>();
+                for(int i = 0; i < portals.Length; i++)
+                {
+                    var portal = portals[i];
+
+                    //Portal functionality was stripped, only orb shows.
+                    if (portal.previewChildName == "StormPortalIndicator")
+                    {
+                        portal.enabled = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

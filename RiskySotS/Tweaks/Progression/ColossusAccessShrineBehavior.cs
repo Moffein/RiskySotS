@@ -26,18 +26,22 @@ namespace RiskySotS.Tweaks.Progression
 
         private void Awake()
         {
-            On.RoR2.PurchaseInteraction.OnInteractionBegin += PurchaseInteractionHack;
             purchaseInteraction = GetComponent<PurchaseInteraction>();
         }
 
-        private void OnDestroy()
+        private void OnEnable()
+        {
+            On.RoR2.PurchaseInteraction.OnInteractionBegin += PurchaseInteractionHack;
+        }
+
+        private void OnDisable()
         {
             On.RoR2.PurchaseInteraction.OnInteractionBegin -= PurchaseInteractionHack;
         }
 
         public void OnPurchaseServer()
         {
-            if (!NetworkServer.active) return;
+            if (!NetworkServer.active || !purchaseInteraction) return;
             purchaseInteraction.SetAvailable(false);
 
             SceneDef currentScene = SceneCatalog.GetSceneDefForCurrentScene();
@@ -74,6 +78,14 @@ namespace RiskySotS.Tweaks.Progression
                     }
                 }
             }
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData
+            {
+                origin = base.transform.position,
+                rotation = Quaternion.identity,
+                scale = 1f,
+                color = new Color(0.3137255f, 0.8392157f, 0.7529412f)
+            }, true);
         }
     }
 }

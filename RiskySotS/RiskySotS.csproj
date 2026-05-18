@@ -20,5 +20,11 @@
 		<PackageReference Include="R2API.Core" Version="5.*" />
 		<PackageReference Include="R2API.Prefab" Version="1.*" />
 	</ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="ProperSave">
+      <HintPath>libs\SoftDependencies\ProperSave.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

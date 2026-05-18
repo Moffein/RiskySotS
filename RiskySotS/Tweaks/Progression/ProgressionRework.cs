@@ -9,6 +9,7 @@ using UnityEngine.AddressableAssets;
 using System.Security.Permissions;
 using System.Security;
 using RoR2.Achievements.VoidSurvivor;
+using System.Runtime.CompilerServices;
 namespace RiskySotS.Tweaks.Progression
 {
     public class ProgressionRework
@@ -45,6 +46,11 @@ namespace RiskySotS.Tweaks.Progression
             SceneDirector.onGenerateInteractableCardSelection += FilterGoldShrineIfForceSpawned;
             On.RoR2.GoldshoresMissionController.OnEnable += GoldshoresMissionController_OnEnable;
             On.RoR2.MeridianEventTriggerInteraction.OnEnable += MeridianEventTriggerInteraction_OnEnable;
+
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.KingEnderBrine.ProperSave"))
+            {
+                HandleSave();
+            }
         }
 
         private void FilterGoldShrineIfForceSpawned(SceneDirector director, DirectorCardCategorySelection dccs)
@@ -375,6 +381,33 @@ namespace RiskySotS.Tweaks.Progression
         {
             //Disable green portal unless it leads to Meridian
             return Run.instance && Run.instance.IsExpansionEnabled(dlc2Expansion) && Run.instance.nextStageScene.stageOrder == 4 && !RunVariables.enteredMeridian;
+        }
+
+
+
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        private void HandleSave()
+        {
+            ProperSave.SaveFile.OnGatherSaveData += Save;
+            ProperSave.Loading.OnLoadingEnded += Load;
+        }
+
+        public static void Save(Dictionary<string, object> dict)
+        {
+            dict.Add("riskySots.hitShrineStage1", RunVariables.hitShrineStage1);
+            dict.Add("riskySots.hitShrineStage2", RunVariables.hitShrineStage2);
+            dict.Add("riskySots.enteredMeridian", RunVariables.enteredMeridian);
+            dict.Add("riskySots.spawnedGoldShrineThisLoop", RunVariables.spawnedGoldShrineThisLoop);
+            dict.Add("riskySots.spawnedGoldShrineThisStage", RunVariables.spawnedGoldShrineThisStage);
+        }
+
+        public void Load(ProperSave.SaveFile save)
+        {
+            RunVariables.hitShrineStage1 = save.GetModdedData<bool>("riskySots.hitShrineStage1");
+            RunVariables.hitShrineStage2 = save.GetModdedData<bool>("riskySots.hitShrineStage2");
+            RunVariables.enteredMeridian = save.GetModdedData<bool>("riskySots.enteredMeridian");
+            RunVariables.spawnedGoldShrineThisLoop = save.GetModdedData<bool>("riskySots.spawnedGoldShrineThisLoop");
+            RunVariables.spawnedGoldShrineThisStage = save.GetModdedData<bool>("riskySots.spawnedGoldShrineThisStage");
         }
     }
 }

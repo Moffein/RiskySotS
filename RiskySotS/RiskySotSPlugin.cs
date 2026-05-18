@@ -12,13 +12,14 @@ using System.Security;
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 namespace RiskySotS
 {
+    [BepInDependency("com.KingEnderBrine.ProperSave", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Wolfo.LoopVariantConfig", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Moffein.RiskyTweaks", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskyLives.RiskyMod", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
     [BepInDependency(R2API.ContentManagement.R2APIContentManager.PluginGUID)]
-    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.0.0")]
+    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.1.0")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class RiskySotSPlugin : BaseUnityPlugin
     {
@@ -92,7 +93,6 @@ namespace RiskySotS
             //Disable redundant tweaks
             if (riskyModLoaded)
             {
-                //EarlygameSpawnPools.enabled = false;  //Reformed Altar changes need to run, check over there.
                 Child.nerfDamage = false;
                 Scorchling.nerfDamage = false;
             }

@@ -30,7 +30,7 @@ namespace RiskySotS.Tweaks.Interactables
                     director.interactableCredit = 240;  //280 -> 240
                     break;
                 case "lakesnight":
-                    director.interactableCredit = 40; //280 -> 240
+                    director.interactableCredit = 240; //280 -> 240
                     break;
                 case "lemuriantemple":
                     director.interactableCredit  = 220;//300 -> 220, matches Abandoned Aqueduct; this is a small map.

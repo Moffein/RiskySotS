@@ -44,6 +44,7 @@ namespace RiskySotS.Tweaks.Progression
             if (!NetworkServer.active || !purchaseInteraction) return;
             purchaseInteraction.SetAvailable(false);
 
+            ProgressionRework.RunVariables.hitShrineThisStage = true;
             SceneDef currentScene = SceneCatalog.GetSceneDefForCurrentScene();
             if (currentScene)
             {

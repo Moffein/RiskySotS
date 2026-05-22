@@ -1,14 +1,9 @@
 ﻿using RoR2.ExpansionManagement;
 using RoR2;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using System.Security.Permissions;
-using System.Security;
-using RoR2.Achievements.VoidSurvivor;
 using System.Runtime.CompilerServices;
 namespace RiskySotS.Tweaks.Progression
 {
@@ -31,6 +26,8 @@ namespace RiskySotS.Tweaks.Progression
 
             public static bool spawnedGoldShrineThisLoop = false;
             public static bool spawnedGoldShrineThisStage = false;
+
+            public static bool hitShrineThisStage = false;
         }
 
         public ProgressionRework()
@@ -51,6 +48,8 @@ namespace RiskySotS.Tweaks.Progression
             {
                 HandleSave();
             }
+
+            new HabitatAccessNodes();
         }
 
         private void FilterGoldShrineIfForceSpawned(SceneDirector director, DirectorCardCategorySelection dccs)
@@ -73,87 +72,89 @@ namespace RiskySotS.Tweaks.Progression
 
         private void SceneDirector_onPrePopulateSceneServer(SceneDirector director)
         {
+            RunVariables.hitShrineThisStage = false;
             RunVariables.spawnedGoldShrineThisStage = false;
-            if (!Run.instance || RunVariables.enteredMeridian || !Run.instance.IsExpansionEnabled(dlc2Expansion)) return;
-
-            bool shouldSpawnAccess = false;
-            bool shouldSpawnHalc = false;
-            bool shouldSpawnGoldShrine = false;
-
-            SceneDef currentScene = SceneCatalog.GetSceneDefForCurrentScene();
-            if (currentScene)
+            if (Run.instance && !RunVariables.enteredMeridian && Run.instance.IsExpansionEnabled(dlc2Expansion))
             {
-                if (currentScene.sceneType == SceneType.Stage && !currentScene.blockOrbitalSkills)
+                bool shouldSpawnAccess = false;
+                bool shouldSpawnHalc = false;
+                bool shouldSpawnGoldShrine = false;
+
+                SceneDef currentScene = SceneCatalog.GetSceneDefForCurrentScene();
+                if (currentScene)
                 {
-                    if (currentScene.stageOrder == 1)
+                    if (currentScene.sceneType == SceneType.Stage && !currentScene.blockOrbitalSkills)
                     {
-                        RunVariables.spawnedGoldShrineThisLoop = false;
-                        shouldSpawnAccess = true;
-                    }
-                    else if (currentScene.stageOrder == 2 && RunVariables.hitShrineStage1)
-                    {
-                        shouldSpawnAccess = true;
-                        if (!RunVariables.spawnedGoldShrineThisLoop) shouldSpawnGoldShrine = Util.CheckRoll(goldShrineChance);
-                    }
-                    else if (currentScene.stageOrder == 3 && RunVariables.hitShrineStage2)
-                    {
-                        shouldSpawnHalc = true;
-                        if (!RunVariables.spawnedGoldShrineThisLoop) shouldSpawnGoldShrine = Util.CheckRoll(goldShrineChance);
-                    }
-                    else
-                    {
-                        RunVariables.hitShrineStage1 = false;
-                        RunVariables.hitShrineStage2 = false;
+                        if (currentScene.stageOrder == 1)
+                        {
+                            RunVariables.spawnedGoldShrineThisLoop = false;
+                            shouldSpawnAccess = true;
+                        }
+                        else if (currentScene.stageOrder == 2 && RunVariables.hitShrineStage1)
+                        {
+                            shouldSpawnAccess = true;
+                            if (!RunVariables.spawnedGoldShrineThisLoop) shouldSpawnGoldShrine = Util.CheckRoll(goldShrineChance);
+                        }
+                        else if (currentScene.stageOrder == 3 && RunVariables.hitShrineStage2)
+                        {
+                            shouldSpawnHalc = true;
+                            if (!RunVariables.spawnedGoldShrineThisLoop) shouldSpawnGoldShrine = Util.CheckRoll(goldShrineChance);
+                        }
+                        else
+                        {
+                            RunVariables.hitShrineStage1 = false;
+                            RunVariables.hitShrineStage2 = false;
+                        }
                     }
                 }
-            }
 
-            //Spawn things if appropriate
-            if (shouldSpawnGoldShrine)
-            {
-                RunVariables.spawnedGoldShrineThisStage = true;
-                Debug.Log("RiskySotS: Spawning random chance Altar of Gold.");
-                DirectorPlacementRule placementRule = new DirectorPlacementRule
+                //Spawn things if appropriate
+                if (shouldSpawnGoldShrine)
                 {
-                    placementMode = DirectorPlacementRule.PlacementMode.Random
-                };
-                GameObject obj = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(iscShrineGold, placementRule, director.rng));
-                if (obj)
-                {
-                    director.interactableCredit--;
-                    RunVariables.spawnedGoldShrineThisLoop = true;
+                    RunVariables.spawnedGoldShrineThisStage = true;
+                    Debug.Log("RiskySotS: Spawning random chance Altar of Gold.");
+                    DirectorPlacementRule placementRule = new DirectorPlacementRule
+                    {
+                        placementMode = DirectorPlacementRule.PlacementMode.Random
+                    };
+                    GameObject obj = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(iscShrineGold, placementRule, director.rng));
+                    if (obj)
+                    {
+                        director.interactableCredit--;
+                        RunVariables.spawnedGoldShrineThisLoop = true;
+                    }
                 }
-            }
 
-            if (shouldSpawnHalc)
-            {
-                Debug.Log("RiskySotS: Spawning Halcyonite Shrine.");
-                //Scale credits because rewards scale with players
-                float creditMult = 1f + (0.5f * (Run.instance.participatingPlayerCount - 1f));
-
-                DirectorPlacementRule placementRule = new DirectorPlacementRule
+                if (shouldSpawnHalc)
                 {
-                    placementMode = DirectorPlacementRule.PlacementMode.Random
-                };
-                GameObject obj = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(iscShrineHalcyonite, placementRule, director.rng));
+                    Debug.Log("RiskySotS: Spawning Halcyonite Shrine.");
+                    //Scale credits because rewards scale with players
+                    float creditMult = 1f + (0.5f * (Run.instance.participatingPlayerCount - 1f));
 
-                //Vanilla Cost: 50
-                //Large Chest: 30
-                //Seems about right if not slightly low, but I'll tolerate it.
-                if (obj)
-                {
-                    director.interactableCredit -= Mathf.FloorToInt(50 * creditMult);
+                    DirectorPlacementRule placementRule = new DirectorPlacementRule
+                    {
+                        placementMode = DirectorPlacementRule.PlacementMode.Random
+                    };
+                    GameObject obj = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(iscShrineHalcyonite, placementRule, director.rng));
+
+                    //Vanilla Cost: 50
+                    //Large Chest: 30
+                    //Seems about right if not slightly low, but I'll tolerate it.
+                    if (obj)
+                    {
+                        director.interactableCredit -= Mathf.FloorToInt(50 * creditMult);
+                    }
                 }
-            }
 
-            if (shouldSpawnAccess)
-            {
-                Debug.Log("RiskySotS: Spawning Shrine of the Colossus.");
-                DirectorPlacementRule placementRule = new DirectorPlacementRule
+                if (shouldSpawnAccess)
                 {
-                    placementMode = DirectorPlacementRule.PlacementMode.Random
-                };
-                DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(ColossusAccessShrine.iscColossusAccessShrine, placementRule, director.rng));
+                    Debug.Log("RiskySotS: Spawning Shrine of the Colossus.");
+                    DirectorPlacementRule placementRule = new DirectorPlacementRule
+                    {
+                        placementMode = DirectorPlacementRule.PlacementMode.Random
+                    };
+                    DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(ColossusAccessShrine.iscColossusAccessShrine, placementRule, director.rng));
+                }
             }
         }
 
@@ -309,7 +310,7 @@ namespace RiskySotS.Tweaks.Progression
 
         private bool PortalSpawner_AttemptSpawnPortalServer(On.RoR2.PortalSpawner.orig_AttemptSpawnPortalServer orig, PortalSpawner self)
         {
-            if (self.portalSpawnCard == null && self.spawnMessageToken == "SHRINE_COLOSSUS_RISKYSOTS_TP_FINISH")
+            if (self.portalSpawnCard == null && self.spawnMessageToken == "SHRINE_COLOSSUS_RISKYSOTS_TP_FINISH" && RunVariables.hitShrineThisStage)
             {
 
                 Chat.SendBroadcastChat(new Chat.SimpleChatMessage

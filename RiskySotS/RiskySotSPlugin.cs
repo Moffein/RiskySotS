@@ -19,7 +19,7 @@ namespace RiskySotS
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
     [BepInDependency(R2API.ContentManagement.R2APIContentManager.PluginGUID)]
-    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.1.0")]
+    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.2.0")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class RiskySotSPlugin : BaseUnityPlugin
     {
@@ -50,7 +50,7 @@ namespace RiskySotS
         {
             ProgressionRework.enabled = base.Config.Bind<bool>(new ConfigDefinition("Progression", "Progression Rework"), true, new ConfigDescription("SotS stages are mixed into the normal map pool, and Meridian access is changed.")).Value;
             ProgressionRework.allowVariantsPreLoop = base.Config.Bind<bool>(new ConfigDefinition("Progression", "Progression Rework - Allow Variants Pre-Loop"), true, new ConfigDescription("SotS stage variants can show up on the first loop.")).Value;
-            ProgressionRework.goldShrineChance = base.Config.Bind<float>(new ConfigDefinition("Progression", "Progression Rework - Altar of Gold Chance"), 50f, new ConfigDescription("Chance for Altar of Gold to spawn on the next stage after hitting a Shrine of the Colossus.")).Value;
+            ProgressionRework.goldShrineChance = base.Config.Bind<float>(new ConfigDefinition("Progression", "Progression Rework - Altar of Gold Chance"), 33f, new ConfigDescription("Chance for Altar of Gold to spawn on the next stage after hitting a Shrine of the Colossus.")).Value;
 
             HalcyonShrine.fasterCharging = base.Config.Bind<bool>(new ConfigDefinition("Interactables", "Halcyon Shrine - Faster Charging"), true, new ConfigDescription("Halcyon Shrine charges faster.")).Value;
             HalcyonShrine.consistentScaling = base.Config.Bind<bool>(new ConfigDefinition("Interactables", "Halcyon Shrine - Consistent Scaling"), true, new ConfigDescription("Halcyon Shrine boss scaling remains consistent throughout the run.")).Value;

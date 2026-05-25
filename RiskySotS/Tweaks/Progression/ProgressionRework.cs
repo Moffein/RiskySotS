@@ -88,7 +88,19 @@ namespace RiskySotS.Tweaks.Progression
                         if (currentScene.stageOrder == 1)
                         {
                             RunVariables.spawnedGoldShrineThisLoop = false;
-                            shouldSpawnAccess = true;
+                            RunVariables.hitShrineStage2 = false;
+
+                            bool isFirstStage = Run.instance.stageClearCount == 0;
+
+                            if ((isFirstStage && ColossusAccessShrine.initialSpawnChance >= 100f) || (!isFirstStage && ColossusAccessShrine.loopSpawnChance >= 100f))
+                            {
+                                shouldSpawnAccess = true;
+                            }
+                            else
+                            {
+                                shouldSpawnAccess = (director.rng.nextNormalizedFloat * 100f)
+                                    <= (isFirstStage ? ColossusAccessShrine.initialSpawnChance : ColossusAccessShrine.loopSpawnChance);
+                            }
                         }
                         else if (currentScene.stageOrder == 2 && RunVariables.hitShrineStage1)
                         {
@@ -97,6 +109,7 @@ namespace RiskySotS.Tweaks.Progression
                         }
                         else if (currentScene.stageOrder == 3 && RunVariables.hitShrineStage2)
                         {
+                            shouldSpawnAccess = false;
                             shouldSpawnHalc = true;
                             if (!RunVariables.spawnedGoldShrineThisLoop) shouldSpawnGoldShrine = Util.CheckRoll(goldShrineChance);
                         }

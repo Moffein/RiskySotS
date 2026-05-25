@@ -10,6 +10,8 @@ namespace RiskySotS.Tweaks.Progression
         public static GameObject ShrinePrefab;
         public static InspectDef ShrineInspectDef;
         public static InteractableSpawnCard iscColossusAccessShrine;
+        public static float initialSpawnChance;
+        public static float loopSpawnChance;
 
         public ColossusAccessShrine()
         {

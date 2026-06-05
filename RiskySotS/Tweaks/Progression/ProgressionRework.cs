@@ -309,6 +309,7 @@ namespace RiskySotS.Tweaks.Progression
 
             //Remove geodes from Bazaar
             On.RoR2.Networking.GenericSceneSpawnPoint.Start += GenericSceneSpawnPoint_Start;
+            SneedUtils.SetAddressableEntityStateField("RoR2/DLC2/EntityStates.Missions.MiniGeodeTracker.Listening.asset", "maxStageTierOrder", "-1");
 
             InteractableSpawnCard colossusPortal = Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/DLC2/iscColossusPortal.asset").WaitForCompletion();
 

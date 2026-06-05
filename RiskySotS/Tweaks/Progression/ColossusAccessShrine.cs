@@ -53,6 +53,12 @@ namespace RiskySotS.Tweaks.Progression
             GenericInspectInfoProvider gii = prefab.GetComponent<GenericInspectInfoProvider>();
             gii.InspectInfo = ShrineInspectDef;
 
+            PurchaseAvailabilityIndicator pai = prefab.GetComponent<PurchaseAvailabilityIndicator>();
+            if (pai)
+            {
+                pai.enabled = true;
+            }
+
             ShrinePrefab = prefab;
         }
 

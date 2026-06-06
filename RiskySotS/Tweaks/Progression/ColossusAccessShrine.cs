@@ -46,6 +46,7 @@ namespace RiskySotS.Tweaks.Progression
             pi.onDetailedPurchaseServer = null;
             Object.Destroy(prefab.GetComponent<ShrineColossusAccessBehavior>());    //Revive Shrine behavior
             prefab.AddComponent<ColossusAccessShrineBehavior>();
+            pi.setUnavailableOnTeleporterActivated = true;
 
             /*GenericDisplayNameProvider gdn = prefab.GetComponent<GenericDisplayNameProvider>();
             gdn.name = "SHRINE_COLOSSUS_RISKYSOTS_NAME";*/

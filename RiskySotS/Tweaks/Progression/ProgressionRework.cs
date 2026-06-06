@@ -135,6 +135,12 @@ namespace RiskySotS.Tweaks.Progression
                     {
                         director.interactableCredit--;
                         RunVariables.spawnedGoldShrineThisLoop = true;
+
+                        PurchaseInteraction pi = obj.GetComponent<PurchaseInteraction>();
+                        if (pi && pi.costType == CostTypeIndex.Money)
+                        {
+                            pi.Networkcost = Run.instance.GetDifficultyScaledCost(pi.cost);
+                        }
                     }
                 }
 

@@ -19,7 +19,7 @@ namespace RiskySotS
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
     [BepInDependency(R2API.ContentManagement.R2APIContentManager.PluginGUID)]
-    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.2.2")]
+    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.2.3")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class RiskySotSPlugin : BaseUnityPlugin
     {

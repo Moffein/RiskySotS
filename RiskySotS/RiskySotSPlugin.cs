@@ -19,7 +19,7 @@ namespace RiskySotS
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
     [BepInDependency(R2API.ContentManagement.R2APIContentManager.PluginGUID)]
-    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.2.3")]
+    [BepInPlugin("com.RiskyLives.RiskySotS", "RiskySotS", "1.2.4")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class RiskySotSPlugin : BaseUnityPlugin
     {
@@ -62,7 +62,8 @@ namespace RiskySotS
 
             EarlygameSpawnPools.enabled = base.Config.Bind<bool>(new ConfigDefinition("Enemies", "Adjust Earlygame Spawnpools"), true, new ConfigDescription("Removes lategame enemies from earlygame stages.")).Value;
 
-            Halcyonite.enabled = base.Config.Bind<bool>(new ConfigDefinition("Enemies", "Halcyonite - Hitboxes"), true, new ConfigDescription("Adjusts Halcyonite hitboxes, still kinda jank tho.")).Value;
+            //Halcyonite.enabled = base.Config.Bind<bool>(new ConfigDefinition("Enemies", "Halcyonite - Hitboxes"), true, new ConfigDescription("Adjusts Halcyonite hitboxes, still kinda jank tho.")).Value;
+            Halcyonite.enabled = false;
 
             Child.removeIFrames = base.Config.Bind<bool>(new ConfigDefinition("Enemies", "Child - Remove I-Frames"), true, new ConfigDescription("Removes invulnerability from teleport.")).Value;
             Child.nerfDamage = base.Config.Bind<bool>(new ConfigDefinition("Enemies", "Child - Nerf Damage"), true, new ConfigDescription("Reduces projectile damage to be in line with other enmies.")).Value;
